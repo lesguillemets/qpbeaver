@@ -34,7 +34,7 @@ def validate_pages_string(pages: str) -> str:
         raise ValueError(f"Cannot understand pages pattern: {pages}")
 
 
-def split_pdf(source: Path, name: str, pages: str, out_dir: Path) -> None:
+def split_pdf(source: Path, name: str, pages: str, out_dir: Path):
     """
     Split PDF using qpdf command.
 
