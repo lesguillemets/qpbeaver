@@ -5,12 +5,11 @@
 import argparse
 from pathlib import Path
 
+from qpbeaver.split import process as process_split
+
 
 def do_split(args):
-    print("Split:")
-    print(f" --out-dir: {args.out_dir}")
-    print(f" --pages-data: {args.pages_data}")
-    print(f" --source: {args.source}")
+    process_split(args.source, args.pages_data, args.out_dir)
 
 
 def do_build(args):
