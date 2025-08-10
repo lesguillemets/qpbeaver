@@ -34,7 +34,7 @@ def validate_pages_string(pages: str) -> str:
         raise ValueError(f"Cannot understand pages pattern: {pages}")
 
 
-def split_pdf(source: Path, name: str, pages: str, out_dir: Path):
+def split_pdf(source: Path, name: str, pages: str, out_dir: Path) -> Path:
     """
     Split PDF using qpdf command.
 
@@ -51,8 +51,27 @@ def split_pdf(source: Path, name: str, pages: str, out_dir: Path):
     try:
         subprocess.run(cmd, check=True, capture_output=True, text=True)
         print(f"Created: {output_file}")
+        return output_file
     except subprocess.CalledProcessError as e:
         print(
             f"Error creating {output_file}: in running {cmd}: \noutput is {e.output}\n stderr was{e.stderr}"
         )
         raise (e)
+
+
+def parse_pages_data(pages_data: Path) -> list[tuple[str, str]]:
+    """
+    parses pages data from a csv
+    returns: a list of tuples (name, pages).
+    """
+    with open(pages_data, "r") as f:
+        reader = csv.reader(f, delimiter=",")
+        return [(row[0], validate_pages_string(row[1])) for row in reader if row]
+
+
+def process(source: Path, pages_data: Path, out_dir: Path) -> list[Path]:
+    result = []
+    for name, pages in parse_pages_data(pages_data):
+        newly_split = split_pdf(source, name, pages, out_dir)
+        result.append(newly_split)
+    return result
