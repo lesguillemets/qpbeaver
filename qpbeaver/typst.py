@@ -38,14 +38,18 @@ def make_checklist(items: list[str]) -> str:
     return f"#list(\nmarker:[{TYPST_CHECKLIST_MARKER}],\n" + the_items + "\n)"
 
 
-def create_header_checklist(items: list[str]) -> Path:
+def create_header_checklist(items: list[str], out: Path | None = None) -> Path:
     """
     チェックリスト作った PDF を ./out に作ってその Path を報告する
     """
-    with tempfile.NamedTemporaryFile(suffix=".pdf", dir="./out", delete=False) as tmp:
-        content = make_checklist(items)
-        gen_pdf(content, Path(tmp.name))
-        return Path(tmp.name)
+    content = make_checklist(items)
+    if out is None:
+        with tempfile.NamedTemporaryFile(
+            suffix=".pdf", dir="./out", delete=False
+        ) as tmp:
+            out = Path(tmp.name)
+    gen_pdf(content, out)
+    return out
 
 
 if __name__ == "__main__":
