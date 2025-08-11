@@ -20,9 +20,9 @@ def do_build(args):
 
 
 def run():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(prog="qpbeaver")
 
-    subparsers = parser.add_subparsers()
+    subparsers = parser.add_subparsers(dest="subcmd")
 
     # subcommand: split
     split_parser = subparsers.add_parser("split", help="Split")
@@ -63,7 +63,10 @@ def run():
     build_parser.set_defaults(func=do_build)
 
     args = parser.parse_args()
-    args.func(args)
+    if args.subcmd is not None:
+        args.func(args)
+    else:
+        parser.print_help()
 
 
 if __name__ == "__main__":
