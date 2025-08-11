@@ -6,6 +6,7 @@ import argparse
 from pathlib import Path
 
 from qpbeaver.split import process as process_split
+from qpbeaver.build import process as process_build
 
 
 def do_split(args):
@@ -13,10 +14,7 @@ def do_split(args):
 
 
 def do_build(args):
-    print("Build:")
-    print(f"--source-dir: {args.source_dir}")
-    print(f"--build-directive: {args.build_directive}")
-    print(f"--out: {args.out}")
+    process_build(args.source_dir, args.build_directive, args.out)
 
 
 def run():

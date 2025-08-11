@@ -7,6 +7,8 @@ import csv
 from pathlib import Path
 from typing import TypeVar
 
+from qpbeaver.typst import create_header_checklist
+
 
 def merge_pdfs(files: list[Path], out: Path):
     """
@@ -30,7 +32,33 @@ def process(
     and the name will be used in the toc.
     If you want to use another name, add it in the second column.
     """
-    pass
+    directives = read_directive(build_directive)
+    files: list[Path] = []
+    names: list[str] = []
+    for name, toc_name in directives:
+        names.append(toc_name or name)  # if toc_name is not None, use that
+        pdf = search_pdf(source_dir, name)
+        if not pdf:
+            raise FileNotFoundError(f"Cannot find {name}.pdf in {source_dir}")
+        files.append(pdf)
+    if append_toc:
+        toc: Path = create_header_checklist(names)
+        files.append(toc)
+
+    merge_pdfs(files, out)
+    print(f"Created: {out}")
+    if append_toc and toc.is_file():
+        toc.unlink()
+
+
+def search_pdf(source_dir: Path, name: str) -> Path | None:
+    """
+    search for a pdf in the source_dir, allowing case-insensitive search.
+    """
+    for pdf in source_dir.rglob("*.pdf", case_sensitive=False):
+        if pdf.stem.lower() == name.lower():
+            return pdf
+    return None
 
 
 def read_directive(build_directive: Path) -> list[tuple[str, str | None]]:
