@@ -3,6 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import subprocess
+import shutil
 import tempfile
 import textwrap
 from pathlib import Path
@@ -14,6 +15,13 @@ TYPST_HEADER = textwrap.dedent("""\
 """)
 
 TYPST_CHECKLIST_MARKER = "□"
+
+
+def is_executable() -> bool:
+    """
+    typst があるかどうか
+    """
+    return shutil.which("typst") is not None
 
 
 def do_typst_compile_pdf(typst_doc: str, out: Path):
