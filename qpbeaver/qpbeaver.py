@@ -24,7 +24,12 @@ def do_build(args):
         )
     else:
         out = args.out
-    process_build(args.source_dir, args.build_directive, out)
+    process_build(
+        args.source_dir,
+        args.build_directive,
+        out,
+        append_toc=(not args.no_append_checklist),
+    )
 
 
 def run():
@@ -97,6 +102,13 @@ def run():
         type=Path,
         required=False,
         help="Output file. Default: a randomely-named file under ./build/",
+    )
+    build_parser.add_argument(
+        "--no-append-checklist",
+        "--nc",
+        required=False,
+        action="store_true",
+        help="Don't append checklist of parts assembled in the back of the PDF",
     )
     build_parser.set_defaults(func=do_build)
 
