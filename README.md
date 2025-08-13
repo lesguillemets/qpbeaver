@@ -49,6 +49,7 @@ python main.py build --source-dir data/pdf/ --build-directive build.csv --out bu
 - `--source-dir`, `-s` contains the PDFs to look for (subdirectories are also searched). Use the directory specified in `--out-dir` in the split command above. Defaults to `data/pdfs/` in this directory.
 - `--build-directive`, `-b` is a CSV file where parts to join are listed.
 - `--out`, `-o` is the output. If not specified, a new file with a random name will be created under the `build/` directory here.
+- If `--no-append-checklist`, `--nc` is given, the checklist will not be appended in the back of the resulting pdf.
 
 `build.csv` should include one part (stem name of the PDF) per line, optionally followed by a comma and a name to use in the checklist that will be automatically appended to the PDF:
 
