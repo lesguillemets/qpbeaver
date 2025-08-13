@@ -46,7 +46,6 @@ def process(
         files.append(toc)
 
     merge_pdfs(files, out)
-    print(f"Created: {out}")
     if append_toc and toc.is_file():
         toc.unlink()
 
