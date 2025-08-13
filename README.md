@@ -15,13 +15,13 @@ sudo snap install typst
 ## split
 
 ```bash
-python main.py split --source input.pdf --pages-data pages.csv --out-dir data/pdf/
+python main.py split --source input.pdf --pages-data pages.csv --out-dir data/pdfs/
 ```
 where
 
 - `--source`, `-s` is the PDF to process
 - `--pages-data`, `-p` is a comma-separated file that has (name, pages) in each row
-- The resulting parts will be created in `--out-dir`, `-o`
+- The resulting parts will be created in `--out-dir`, `-o`, or by default, `data/pdfs/` in this directory.
 
 
 Example of `pages.csv`:
@@ -30,7 +30,7 @@ front,1-5
 AQ,6-10
 ```
 
-Which will create `output/pdf/front.pdf` and `output/pdf/AQ.pdf`.
+Which will create `data/pdfs/front.pdf` and `data/pdfs/AQ.pdf`.
 
 The page parts are directly passed to qpdf, where
 
@@ -43,12 +43,12 @@ The page parts are directly passed to qpdf, where
 ## build
 
 ```bash
-python main.py build --source-dir data/pdf/ --build-directive build.csv --out out/output.pdf
+python main.py build --source-dir data/pdf/ --build-directive build.csv --out build/output.pdf
 ```
 
-- `--source-dir`, `-s` contains the PDFs to look for (subdirectories are also searched). Use the directory specified in `--out-dir` in the split command above.
-- `--build-directive`, `-b` is a CSV file where parts to join are listed
-- `--out`, `-o` is the output
+- `--source-dir`, `-s` contains the PDFs to look for (subdirectories are also searched). Use the directory specified in `--out-dir` in the split command above. Defaults to `data/pdfs/` in this directory.
+- `--build-directive`, `-b` is a CSV file where parts to join are listed.
+- `--out`, `-o` is the output. If not specified, a new file with random name will be created under `build/` directory here.
 
 `build.csv` should include one part (stem name of the PDF) per line, optionally followed by a comma and a name to use in the checklist that will be automatically appended to the PDF:
 
