@@ -96,7 +96,7 @@ def run():
         "-o",
         type=Path,
         required=False,
-        help="Output file. Default: a randomely-named file under ./out/",
+        help="Output file. Default: a randomely-named file under ./build/",
     )
     build_parser.set_defaults(func=do_build)
 

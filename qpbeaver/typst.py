@@ -48,12 +48,12 @@ def make_checklist(items: list[str]) -> str:
 
 def create_header_checklist(items: list[str], out: Path | None = None) -> Path:
     """
-    チェックリスト作った PDF を ./out に作ってその Path を報告する
+    チェックリスト作った PDF を ./build に作ってその Path を報告する
     """
     content = make_checklist(items)
     if out is None:
         with tempfile.NamedTemporaryFile(
-            suffix=".pdf", dir="./out", delete=False
+            suffix=".pdf", dir="./build", delete=False
         ) as tmp:
             out = Path(tmp.name)
     gen_pdf(content, out)
