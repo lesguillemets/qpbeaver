@@ -25,17 +25,36 @@ def run():
     # subcommand: split
     split_parser = subparsers.add_parser("split", help="Split")
     split_parser.add_argument(
-        "--source", "-s", type=Path, required=True, help="Process this file"
+        "--source",
+        "-s",
+        type=Path,
+        required=True,
+        help="PDF file containing pages to split",
     )
     split_parser.add_argument(
-        "--pages-data", "-p", type=Path, required=True, help="Pages and names"
+        "--pages-data",
+        "-p",
+        type=Path,
+        required=True,
+        help="\n".join(
+            [
+                "Pages and names",
+                "\tcomma-separated file that has (name, pages) in each row",
+                "\t(see README.md)",
+            ]
+        ),
     )
     split_parser.add_argument(
         "--out-dir",
         "-o",
         type=Path,
         required=True,
-        help="Output directory for resulting files",
+        help="\n".join(
+            [
+                "Output directory for resulting files.",
+                "\tdefault: data/pdfs in the directory of the script",
+            ],
+        ),
     )
     split_parser.set_defaults(func=do_split)
 
@@ -46,17 +65,26 @@ def run():
         "-s",
         type=Path,
         required=True,
-        help="The directory containing files that are split",
+        help="\n".join(
+            [
+                "The directory containing files that are split.",
+                "\tdefault: data/pdfs in the directory of the script",
+            ]
+        ),
     )
     build_parser.add_argument(
         "--build-directive",
         "-b",
         type=Path,
         required=True,
-        help="How do I assemble the files",
+        help="Text (csv) file containing pdfs to merge",
     )
     build_parser.add_argument(
-        "--out", "-o", type=Path, required=True, help="Output file"
+        "--out",
+        "-o",
+        type=Path,
+        required=False,
+        help="Output file. Default: a randomely-named file under ./out/",
     )
     build_parser.set_defaults(func=do_build)
 
