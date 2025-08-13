@@ -4,11 +4,13 @@
 
 import argparse
 from pathlib import Path
+import tempfile
 
 from qpbeaver.split import process as process_split
 from qpbeaver.build import process as process_build
 
 DEFAULT_OUT_DIR: Path = (Path(__file__).parent.parent / "data" / "pdfs").resolve()
+DEFAULT_BUILD_DIR: Path = (Path(__file__).parent.parent / "out").resolve()
 
 
 def do_split(args):
@@ -16,7 +18,13 @@ def do_split(args):
 
 
 def do_build(args):
-    process_build(args.source_dir, args.build_directive, args.out)
+    if args.out is None:
+        (_, out) = tempfile.mkstemp(
+            suffix=".pdf", prefix="qpb_", dir=str(DEFAULT_BUILD_DIR)
+        )
+    else:
+        out = args.out
+    process_build(args.source_dir, args.build_directive, out)
 
 
 def run():
