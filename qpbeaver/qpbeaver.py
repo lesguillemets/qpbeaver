@@ -8,6 +8,8 @@ from pathlib import Path
 from qpbeaver.split import process as process_split
 from qpbeaver.build import process as process_build
 
+DEFAULT_OUT_DIR: Path = (Path(__file__).parent.parent / "data" / "pdfs").resolve()
+
 
 def do_split(args):
     process_split(args.source, args.pages_data, args.out_dir)
@@ -48,7 +50,8 @@ def run():
         "--out-dir",
         "-o",
         type=Path,
-        required=True,
+        required=False,
+        default=DEFAULT_OUT_DIR,
         help="\n".join(
             [
                 "Output directory for resulting files.",
@@ -64,7 +67,8 @@ def run():
         "--source-dir",
         "-s",
         type=Path,
-        required=True,
+        required=False,
+        default=DEFAULT_OUT_DIR,
         help="\n".join(
             [
                 "The directory containing files that are split.",
