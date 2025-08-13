@@ -9,8 +9,8 @@ import tempfile
 from qpbeaver.split import process as process_split
 from qpbeaver.build import process as process_build
 
-DEFAULT_OUT_DIR: Path = (Path(__file__).parent.parent / "data" / "pdfs").resolve()
-DEFAULT_BUILD_DIR: Path = (Path(__file__).parent.parent / "out").resolve()
+DEFAULT_SPLIT_DIR: Path = (Path(__file__).parent.parent / "data" / "pdfs").resolve()
+DEFAULT_BUILD_DIR: Path = (Path(__file__).parent.parent / "build").resolve()
 
 
 def do_split(args):
@@ -59,7 +59,7 @@ def run():
         "-o",
         type=Path,
         required=False,
-        default=DEFAULT_OUT_DIR,
+        default=DEFAULT_SPLIT_DIR,
         help="\n".join(
             [
                 "Output directory for resulting files.",
@@ -76,7 +76,7 @@ def run():
         "-s",
         type=Path,
         required=False,
-        default=DEFAULT_OUT_DIR,
+        default=DEFAULT_SPLIT_DIR,
         help="\n".join(
             [
                 "The directory containing files that are split.",
