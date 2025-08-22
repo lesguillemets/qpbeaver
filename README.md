@@ -3,12 +3,12 @@
 ## Dependencies
 
 - [qpdf](https://github.com/qpdf/qpdf)
-- [typst](https://github.com/typst/typst)
+- [typst](https://github.com/typst/typst) only when running `build` without `--nc`
 
-For Ubuntu-based systems:
+For Ubuntu (Debian) -based systems:
 
 ```bash
-sudo apt-get install qpdf
+sudo apt install qpdf
 sudo snap install typst
 ```
 
