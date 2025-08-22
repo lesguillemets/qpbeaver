@@ -8,6 +8,7 @@ import tempfile
 
 from qpbeaver.split import process as process_split
 from qpbeaver.build import process as process_build
+from qpbeaver.typst import is_executable as typst_is_executable
 
 DEFAULT_SPLIT_DIR: Path = (Path(__file__).parent.parent / "data" / "pdfs").resolve()
 DEFAULT_BUILD_DIR: Path = (Path(__file__).parent.parent / "build").resolve()
@@ -24,6 +25,12 @@ def do_build(args):
         )
     else:
         out = args.out
+    if not args.no_append_checklist and not typst_is_executable():
+        # check if executable
+        raise FileNotFoundError(
+            "typst is not executable: check your environment,"
+            " or try with --no-append-checklist (--nc)."
+        )
     process_build(
         args.source_dir,
         args.build_directive,
