@@ -5,3 +5,11 @@ description = "split, swap and merge questionnaires"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = []
+license-files = ["LICENSE.txt"]
+authors = [ {name = "lesguillemets"} ]
+
+[tool.setuptools]
+packages = ["qpbeaver"]
+
+[project.scripts]
+qpbeaver = "qpbeaver.qpbeaver:run"
